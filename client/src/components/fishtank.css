@@ -6,11 +6,12 @@
     background-color: #87cefa; /* Tank water color */
     margin: 20px auto;
     overflow: hidden;
+    border-radius: 15px;
   }
   
   .fish {
     position: absolute;
-    transition: left 0.1s, top 0.1s;
+    transition: transform 0.05s linear;
     background-image: url('../../public/fish.png');
     background-size: cover;
     background-position: center;  
@@ -20,5 +21,28 @@
     position: absolute;
     background-color: orange;
     border-radius: 50%;
+  }
+
+  .warning {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .financial-info {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .financial-item {
+    margin: 0 20px;
+    font-size: 18px;
   }
   

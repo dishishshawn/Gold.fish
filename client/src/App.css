@@ -10,6 +10,15 @@
 .tracker-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   margin-top: 20px;
+}
+
+.income-input, .expense-input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
