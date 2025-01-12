@@ -1,46 +1,15 @@
 .App {
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   text-align: center;
-  padding: 20px;
 }
 
 .tracker-container {
   display: flex;
   justify-content: center;
   gap: 20px;
-}
-
-.fish-tank-container {
-  position: relative;
-  width: 80vw;  /* Tank width adjusts to 80% of the screen width */
-  height: 50vh;  /* Tank height adjusts to 50% of the screen height */
-  background-color: #ADD8E6;  /* Light blue color to resemble water */
-  border: 2px solid #000;  /* Black border for tank */
-  overflow: hidden;
-  border-radius: 15px;
-  margin: 20px auto;
-  transition: width 0.5s, height 0.5s; /* Smooth resizing when the window changes */
-}
-
-.fish {
-  position: absolute;
-  width: 10%;  /* Fish size is 10% of the tank's width */
-  height: auto;
-  animation: swim 5s infinite linear;
-  transition: width 0.5s; /* Smooth resizing of fish */
-}
-
-@keyframes swim {
-  0% {
-    left: 0;
-    transform: scaleX(1);  /* Fish faces right */
-  }
-  50% {
-    left: 70%;
-    transform: scaleX(-1);  /* Fish faces left */
-  }
-  100% {
-    left: 0;
-    transform: scaleX(1);
-  }
+  margin-top: 20px;
 }

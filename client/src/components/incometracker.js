@@ -1,5 +1,6 @@
 // components/incometracker.js
 import React from 'react';
+import './incometracker.css';
 
 const IncomeTracker = ({ setIncome }) => {
   const handleIncomeChange = (e) => {

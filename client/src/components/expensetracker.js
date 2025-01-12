@@ -1,5 +1,6 @@
 // components/expensetracker.js
 import React from 'react';
+import './expensetracker.css';
 
 const ExpenseTracker = ({ setExpenses }) => {
   const handleExpenseChange = (e) => {

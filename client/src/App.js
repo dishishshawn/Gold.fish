@@ -18,7 +18,7 @@ function App() {
         <IncomeTracker setIncome={setIncome} />
         <ExpenseTracker setExpenses={setExpenses} />
       </div>
-      <FishTank />
+      <FishTank income={income} expenses={expenses}/>
       <div>
         <h2>Income: ${income}</h2>
         <h2>Expenses: ${expenses}</h2>
