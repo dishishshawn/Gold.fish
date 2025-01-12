@@ -1,33 +1,51 @@
-import React, { useState, useEffect } from "react";
+// components/fishtank.js
+import React, { useEffect, useState } from 'react';
+import './fishtank.css'; // Make sure to add CSS styles
 
-const FishTank = ({ income, expenses }) => {
-  const [tankSize, setTankSize] = useState(100); // Default tank size
-  const [fishSize, setFishSize] = useState(10); // Default fish size
+const FishTank = () => {
+  const [fishPosition, setFishPosition] = useState({ x: 50, y: 50 }); // Initial position
+  const [fishDirection, setFishDirection] = useState('right'); // Fish movement direction
+
+  const moveFish = () => {
+    setFishPosition(prev => {
+      let newX = prev.x;
+      let newY = prev.y;
+
+      if (fishDirection === 'right') {
+        newX += 2;
+        if (newX > 90) setFishDirection('down');
+      }
+      if (fishDirection === 'down') {
+        newY += 2;
+        if (newY > 90) setFishDirection('left');
+      }
+      if (fishDirection === 'left') {
+        newX -= 2;
+        if (newX < 10) setFishDirection('up');
+      }
+      if (fishDirection === 'up') {
+        newY -= 2;
+        if (newY < 10) setFishDirection('right');
+      }
+
+      return { x: newX, y: newY };
+    });
+  };
 
   useEffect(() => {
-    // Adjust tank size based on income
-    let newSize = Math.min(100 + income / 100, 500); // Tank size grows with income
-    setTankSize(newSize);
-
-    // Adjust fish size based on expenses
-    let newFishSize = Math.max(10, 10 + expenses / 50); // Fish size grows with expenses
-    setFishSize(newFishSize);
-  }, [income, expenses]);
+    const interval = setInterval(moveFish, 100); // Move fish every 100ms
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [fishDirection]); // Depend on fishDirection to trigger move
 
   return (
-    <div style={{ width: `${tankSize}%`, height: "200px", backgroundColor: "lightblue", position: "relative" }}>
+    <div className="fish-tank">
       <div
+        className="fish"
         style={{
-          width: `${fishSize}%`,
-          height: `${fishSize}%`,
-          backgroundColor: "gold",
-          borderRadius: "50%",
-          position: "absolute",
+          left: `${fishPosition.x}%`,
+          top: `${fishPosition.y}%`,
         }}
       ></div>
-      <h3>Fish Tank</h3>
-      <p>Tank Size: {Math.round(tankSize)}</p>
-      <p>Fish Size: {Math.round(fishSize)}</p>
     </div>
   );
 };

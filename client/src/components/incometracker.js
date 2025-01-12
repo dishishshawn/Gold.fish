@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+// components/incometracker.js
+import React from 'react';
 
 const IncomeTracker = ({ setIncome }) => {
-  const [income, setLocalIncome] = useState("");
-
   const handleIncomeChange = (e) => {
-    setLocalIncome(e.target.value);
-    setIncome(e.target.value); // Pass income value to parent component
+    setIncome(Number(e.target.value)); // Update income state
   };
 
   return (
     <div>
-      <h2>Track Your Income</h2>
+      <label>Income: </label>
       <input
         type="number"
-        placeholder="Enter your income"
-        value={income}
         onChange={handleIncomeChange}
+        placeholder="Enter income"
       />
     </div>
   );

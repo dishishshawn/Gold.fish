@@ -1,0 +1,20 @@
+/* components/FishTank.css */
+.fish-tank {
+    position: relative;
+    width: 80vw;
+    height: 40vh;
+    border: 2px solid #006400; /* Tank border color */
+    background-color: #87cefa; /* Tank water color */
+    margin: 20px auto;
+    overflow: hidden;
+  }
+  
+  .fish {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: gold;
+    border-radius: 50%;
+    transition: left 0.1s, top 0.1s;
+  }
+  

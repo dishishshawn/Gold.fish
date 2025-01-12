@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+// components/expensetracker.js
+import React from 'react';
 
 const ExpenseTracker = ({ setExpenses }) => {
-  const [expense, setExpense] = useState("");
-
   const handleExpenseChange = (e) => {
-    setExpense(e.target.value);
-    setExpenses(e.target.value); // Pass expense value to parent component
+    setExpenses(Number(e.target.value)); // Update expenses state
   };
 
   return (
     <div>
-      <h2>Track Your Expenses</h2>
+      <label>Expenses: </label>
       <input
         type="number"
-        placeholder="Enter your expenses"
-        value={expense}
         onChange={handleExpenseChange}
+        placeholder="Enter expenses"
       />
     </div>
   );
