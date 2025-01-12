@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header>
       <h1>Gold.fish</h1>
-      <p>Your financial fishtank.</p>
+      <p>Live within your means.</p>
     </header>
   );
 };

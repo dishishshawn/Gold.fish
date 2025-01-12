@@ -3,40 +3,39 @@ import './fishtank.css';
 
 const FishTank = ({ expenses, income }) => {
   const [fishPosition, setFishPosition] = useState({ x: 50, y: 50 });
-  const [fishSize, setFishSize] = useState(50); // Start with a size of 50px
+  const [fishSize, setFishSize] = useState(50);
   const [foodItems, setFoodItems] = useState([]);
   const [maxFoodItems, setMaxFoodItems] = useState(10);
-  const [showWarning, setShowWarning] = useState(false); // Correctly initialize state
+  const [showWarning, setShowWarning] = useState(false);
 
-  // Calculate fish growth based on expenses
   useEffect(() => {
-    const newSize = Math.max(50, Math.min(100, (expenses / income) * 50 + 50)); // Base size of 50px, capped at 100px
+    const newSize = Math.max(50, Math.min(100, (expenses / income) * 50 + 50));
     setFishSize(newSize);
 
-    // Check if expenses match income
     if (expenses >= income) {
-      setShowWarning(true); // Correct usage of setShowWarning
+      setShowWarning(true);
     } else {
       setShowWarning(false);
     }
   }, [expenses, income]);
 
-  // Spawn food items based on expenses
+  // Spawn food with varying rate and size based on the ratio
   const spawnFood = () => {
-    const foodAmount = Math.floor(expenses / 10); // Number of food items based on expenses
-    const itemsToSpawn = Math.min(foodAmount, maxFoodItems); // Limit the number of food items
+    const spawnRate = Math.max(0.1, Math.min(1, expenses / income)); // Ratio between 0.1 and 1
+    const foodAmount = Math.floor(spawnRate * maxFoodItems); // Determine how much food to spawn
+    const foodSize = Math.max(10, Math.min(30, spawnRate * 30)); // Make food bigger as the ratio increases
 
-    const newFoodItems = [];
-    for (let i = 0; i < itemsToSpawn; i++) {
-      const foodX = Math.random() * 90 + 10; // Random x position within tank bounds
-      const foodY = Math.random() * 90 + 10; // Random y position within tank bounds
-      newFoodItems.push({ x: foodX, y: foodY });
-    }
-
-    setFoodItems(newFoodItems); // Set food items to state
+    const newFoodItem = {
+      x: Math.random() * 90 + 10,
+      y: Math.random() * 90 + 10,
+      size: foodSize, // Add size property
+    };
+    
+    // Add a new food item to the list
+    setFoodItems(prevFoodItems => [...(Array.isArray(prevFoodItems) ? prevFoodItems : []), newFoodItem]);
   };
 
-  // Move fish towards the nearest food
+  // Move the fish towards the nearest food
   const moveFish = () => {
     if (foodItems.length > 0) {
       const nearestFood = foodItems.reduce((closest, food) => {
@@ -53,14 +52,13 @@ const FishTank = ({ expenses, income }) => {
       const directionY = nearestFood.y - fishPosition.y;
       const distance = Math.sqrt(directionX ** 2 + directionY ** 2);
 
-      const newX = fishPosition.x + (directionX / distance) * 2; // Adjust speed towards food
+      const newX = fishPosition.x + (directionX / distance) * 2;
       const newY = fishPosition.y + (directionY / distance) * 2;
 
       setFishPosition({ x: newX, y: newY });
     }
   };
 
-  // Check if fish eats any food
   const checkIfFishEatsFood = () => {
     setFoodItems(prevFoodItems => {
       return prevFoodItems.filter(food => {
@@ -69,10 +67,9 @@ const FishTank = ({ expenses, income }) => {
         );
 
         if (distance < 5) {
-          return false; // Remove the food item
+          return false; // Remove food item when eaten
         }
-
-        return true; // Keep the food if not eaten
+        return true; // Keep food if not eaten
       });
     });
   };
@@ -87,10 +84,19 @@ const FishTank = ({ expenses, income }) => {
     return () => clearInterval(interval);
   }, [fishPosition, foodItems]);
 
-  // Spawn food whenever expenses change
   useEffect(() => {
-    spawnFood();
-  }, [expenses]);
+    // Clear food items whenever expenses change
+    setFoodItems([]);
+    
+    // Set spawn frequency based on income/expense ratio
+    const spawnFrequency = Math.max(500, 3000 - (expenses / income) * 2000); // Gradually faster as ratio increases
+
+    const foodInterval = setInterval(() => {
+      spawnFood(); // Spawn one food item
+    }, spawnFrequency);
+
+    return () => clearInterval(foodInterval);
+  }, [expenses, income]);
 
   return (
     <div>
@@ -103,7 +109,7 @@ const FishTank = ({ expenses, income }) => {
             width: `${fishSize}px`,
             height: `${fishSize}px`,
             borderRadius: '50%',
-            transform: `rotate(${Math.atan2(fishPosition.y - foodItems[0]?.y, fishPosition.x - foodItems[0]?.x) * (180 / Math.PI)}deg)` // Rotate the fish to face its movement direction
+            transform: `rotate(${Math.atan2(fishPosition.y - foodItems[0]?.y, fishPosition.x - foodItems[0]?.x) * (180 / Math.PI)}deg)`
           }}
         ></div>
         {foodItems.map((food, index) => (
@@ -113,8 +119,8 @@ const FishTank = ({ expenses, income }) => {
             style={{
               left: `${food.x}%`,
               top: `${food.y}%`,
-              width: '10px',
-              height: '10px',
+              width: `${food.size}px`,
+              height: `${food.size}px`,
               backgroundColor: 'orange',
               borderRadius: '50%',
             }}

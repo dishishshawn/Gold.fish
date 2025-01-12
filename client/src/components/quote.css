@@ -1,13 +1,12 @@
 .Quotes {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .quote {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-  
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.quote {
+  font-size: 1.2rem;
+  text-align: center;
+}
