@@ -1,18 +1,28 @@
-import React from "react";
-import Header from "./components/Header";
-import IncomeTracker from "./components/IncomeTracker";
-import ExpenseTracker from "./components/ExpenseTracker";
-import FishTank from "./components/FishTank";
-import Quotes from "./components/Quotes";
+import React, { useState } from "react";
+import Header from "./components/header";
+import IncomeTracker from "./components/incometracker";
+import ExpenseTracker from "./components/expensetracker";
+import FishTank from "./components/fishtank";
+import Quotes from "./components/quotes";
 
 function App() {
+
+  // Define state variables
+  const [income, setIncome] = useState(0); // State for income
+  const [expenses, setExpenses] = useState(0); // State for expenses
+
   return (
     <div className="App">
       <Header />
       <Quotes />
-      <IncomeTracker />
-      <ExpenseTracker />
-      <FishTank />
+
+      {/* Conainer for Income and Expense trackers */}
+      <div className="tracker-container">
+        <IncomeTracker setIncome={setIncome}/>
+        <ExpenseTracker setExpenses={setExpenses}/>
+      </div>
+      
+      <FishTank income={income} expenses={expenses}/>
     </div>
   );
 }
