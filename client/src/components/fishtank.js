@@ -46,7 +46,7 @@ const FishTank = ({ expenses, income }) => {
           Math.pow(fishPosition.x - closest.x, 2) + Math.pow(fishPosition.y - closest.y, 2)
         );
         return currentDistance < closestDistance ? food : closest;
-      });
+      }, foodItems[0]); // Start with the first food item as the closest
 
       const directionX = nearestFood.x - fishPosition.x;
       const directionY = nearestFood.y - fishPosition.y;
@@ -109,7 +109,7 @@ const FishTank = ({ expenses, income }) => {
             width: `${fishSize}px`,
             height: `${fishSize}px`,
             borderRadius: '50%',
-            transform: `rotate(${Math.atan2(fishPosition.y - foodItems[0]?.y, fishPosition.x - foodItems[0]?.x) * (180 / Math.PI)}deg)`
+            transform: foodItems[0] ? `rotate(${Math.atan2(fishPosition.y - foodItems[0]?.y, fishPosition.x - foodItems[0]?.x) * (180 / Math.PI)}deg)` : 'none'
           }}
         ></div>
         {foodItems.map((food, index) => (
